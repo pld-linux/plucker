@@ -144,11 +144,13 @@ do
 done
 
 # desktop - locale
-for lang_ in `ls ./plucker_desktop/langs`
+for lang_ in `ls plucker_desktop/langs`
 do
+	if [ -f plucker_desktop/langs/${lang_}/plucker-desktop.mo ]; then
 	install -d $RPM_BUILD_ROOT%{_datadir}/locale/${lang_}/LC_MESSAGES
-	install ./plucker_desktop/langs/${lang_}/plucker-desktop.mo \
+	install plucker_desktop/langs/${lang_}/plucker-desktop.mo \
 		$RPM_BUILD_ROOT%{_datadir}/locale/${lang_}/LC_MESSAGES
+	fi
 done
 
 %find_lang plucker-desktop
@@ -166,5 +168,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files desktop -f plucker-desktop.lang
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/plucker-desktop
 %{DataDir}-desktop/resource
-%{_bindir}/plucker-desktop
