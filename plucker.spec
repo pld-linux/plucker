@@ -1,10 +1,9 @@
-# TODO: do all post/preun/postun work during package build!
 %include	/usr/lib/rpm/macros.python
 Summary:	plucker - PalmOS conduit 
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
 Version:	1.6.1	
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Aplications
 Source0:	http://downloads.plkr.org/%{version}/%{name}_src-%{version}.tar.bz2
@@ -22,9 +21,6 @@ BuildRequires:	wxGTK2-devel
 BuildRequires:	sgml-tools
 BuildRequires:	python-devel-src
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
-
-# This is fuckin' piece of shit made only because plucker's developers 
-# seem to no longer make source code tarballs available. Evil.
 
 %description
 Plucker increases the utility of your handheld device by letting you
@@ -48,10 +44,13 @@ specyficznych wymagañ.
 
 %prep
 %setup -q -n %{name}-%{version}
-#cp %{_sourcedir}/setup.py.in %{_builddir}/%{name}-%{version}
 %patch0 -p1
 
 %build
+%define PyPluckerDir %{py_sitedir}/PyPlucker
+%define DataDir %{_datadir}/%{name}
+%define DocDir %{_datadir}/doc/%{name}-%{version}-%{release}
+
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}
@@ -59,16 +58,14 @@ cp /usr/share/latex2html/texinputs/html.sty docs
 cp /usr/lib/sgml-tools/epsf.sty docs
 cd unix
 
-#/tmp/plucker-1.6.1-1-root-yoshi/
-
 cat>>pld_install_answers<<EOF
 $RPM_BUILD_ROOT
 $RPM_BUILD_ROOT/bin
 n
 n
 $RPM_BUILD_ROOT/usr/lib/python2.3/site-packages
-$RPM_BUILD_ROOT/usr/share/%{name}
-$RPM_BUILD_ROOT/usr/share/doc/%{name}-%{version}-%{release}
+$RPM_BUILD_ROOT%{DataDir}
+$RPM_BUILD_ROOT%{DocDir}
 y
 $RPM_BUILD_ROOT/var/spool/netcomics
 y
@@ -77,14 +74,15 @@ y
 y
 n
 EOF
+
+
 ./install-plucker < pld_install_answers
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%define PyPluckerDir %{py_sitedir}/PyPlucker
-%define DataDir %{_datadir}/plucker
-%define DocDir %{_datadir}/doc/plucker
 
+## Licence for palmosdk should be checked. Currently it is commented out.
 ## Viewer
 #install -d $RPM_BUILD_ROOT%{DataDir}/palm
 #install -m 755 viewer/*.prc $RPM_BUILD_ROOT%{DataDir}/palm
@@ -115,39 +113,17 @@ install -d $RPM_BUILD_ROOT%{_mandir}/man1
 install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
-rm -rf $RPM_BUILD_ROOT
-
-#%post
-#python %{_libdir}/python2.3/compileall.py %{PyPluckerDir}
-#python -O %{_libdir}/python2.3/compileall.py %{PyPluckerDir}
-
-# make sure we don't have some old cruft in the binary dir
-rm -f %{_bindir}/plucker-build
-rm -f %{_bindir}/plucker-decode
-rm -f %{_bindir}/plucker-dump
+#rm -rf $RPM_BUILD_ROOT
 
 # add links to parser tools
 ln -s %{PyPluckerDir}/Spider.py  %{_bindir}/plucker-build
 ln -s %{PyPluckerDir}/PluckerDocs.py %{_bindir}/plucker-decode
 ln -s %{PyPluckerDir}/PluckerDecode.py %{_bindir}/plucker-dump
 
-%preun
-rm -f %{PyPluckerDir}/*.pyc
-rm -f %{PyPluckerDir}/*.pyo
-rm -f %{PyPluckerDir}/helper/*.pyc
-rm -f %{PyPluckerDir}/helper/*.pyo
-
-%postun
-rm -f %{_bindir}/plucker-build
-rm -f %{_bindir}/plucker-decode
-rm -f %{_bindir}/plucker-dump
-
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS TODO manual
 %attr(755,root,root) %{_bindir}/plucker-setup
-%{_mandir}/man1/plucker-build*
-%{_mandir}/man1/plucker-decode*
-%{_mandir}/man1/plucker-dump*
+%{_mandir}/man1/*.1.gz
 %{py_sitedir}/PyPlucker
 %{_datadir}/plucker
