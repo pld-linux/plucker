@@ -25,6 +25,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	sgml-tools
 BuildRequires:	wxGTK2-devel
 BuildRequires:	python-devel-src
+BuildRequires:	latex2html
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
 %description
