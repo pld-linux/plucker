@@ -20,7 +20,6 @@ BuildRequires:	netpbm-progs
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel-src
 BuildRequires:	python-modules
-BuildRequires:	rpm-pythonprov
 BuildRequires:	sgml-tools
 BuildRequires:	wxGTK2-devel
 %pyrequires_eq	python-modules
