@@ -54,6 +54,7 @@ specyficznych wymagañ.
 %{__aclocal}
 %{__autoconf}
 cp /usr/share/latex2html/texinputs/html.sty docs
+cp /usr/lib/sgml-tools/epsf.sty docs
 cd unix
 cat>>pld_install_answers<<EOF
 $RPM_BUILD_ROOT
