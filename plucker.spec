@@ -3,7 +3,7 @@ Summary:	plucker - PalmOS conduit
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
 Version:	1.8
-Release:	1
+Release:	0.1
 License:	GPL
 Group:		X11/Aplications
 Source0:	http://downloads.plkr.org/%{version}/%{name}_src-%{version}.tar.bz2
@@ -14,14 +14,14 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel
+BuildRequires:	latex2html
 BuildRequires:	netpbm-progs
+BuildRequires:	python-devel-src
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sgml-tools
 BuildRequires:	wxGTK2-devel
-BuildRequires:	python-devel-src
-BuildRequires:	latex2html
-BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Plucker increases the utility of your handheld device by letting you
@@ -47,7 +47,7 @@ specyficznych wymagañ.
 Summary:	Graphical environment for plucker
 Summary(pl):	Graficzne ¶rodowisko dla pluckera
 Group:		X11/Applications
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description desktop
 This is the graphical environment for plucker.
@@ -56,7 +56,7 @@ This is the graphical environment for plucker.
 To jest graficzne ¶rodowisko dla pluckera.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch1 -p0
 
 %build
