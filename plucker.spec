@@ -3,17 +3,13 @@
 Summary:	plucker - PalmOS conduit 
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
-Version:	1.6.1	
-Release:	3
+Version:	1.8
+Release:	1
 License:	GPL
 Group:		X11/Aplications
 Source0:	http://downloads.plkr.org/%{version}/%{name}_src-%{version}.tar.bz2
-# Source0-md5:	2517da5cac331531f9b6fb27cdbab6a8
-Source1:	http://downloads.plkr.org/1.6.1/%{name}_viewer_nonhires-%{version}.tar.bz2
-# Source1-md5:	4c7187a5446712863f60dbdd8e6e283d
-Source2:	http://downloads.plkr.org/1.6.1/%{name}_viewer-%{version}.tar.bz2
-# Source2-md5:	00b39eaf934e1ac5a2244dce19549e3e
-Patch0:		plucker-pld.patch
+# Source0-md5:	ff4d0890ebdfd1a0f130530b67bafc0b
+Patch1:		%{name}-pld.patch
 URL:		http://www.plkr.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -62,7 +58,7 @@ To jest graficzne ¶rodowisko dla pluckera.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1
+%patch1 -p0
 
 %build
 %define PyPluckerDir %{py_sitedir}/PyPlucker
@@ -72,34 +68,12 @@ To jest graficzne ¶rodowisko dla pluckera.
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}
-cp /usr/share/latex2html/texinputs/html.sty docs
-cp /usr/share/sgml-tools/epsf.sty docs
-cd unix
+%configure \
+	--disable-palmosbuild \
+	--with-wx-config=/usr/bin/wxgtk2-2.4-config
 
-test -d ~/.plucker || mkdir ~/.plucker
-
-cat>>pld_install_answers<<EOF
-$RPM_BUILD_ROOT
-$RPM_BUILD_ROOT/bin
-n
-n
-$RPM_BUILD_ROOT/usr/lib/python2.3/site-packages
-$RPM_BUILD_ROOT%{DataDir}
-$RPM_BUILD_ROOT%{DocDir}
-y
-$RPM_BUILD_ROOT/var/spool/netcomics
-y
-n
-y
-y
-n
-EOF
-
-./install-plucker < pld_install_answers
-
-cd ..
-
-%{__make} -C plucker_desktop
+cp -f /usr/share/sgml-tools/epsf.sty /usr/share/latex2html/texinputs/html.sty docs
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -111,7 +85,6 @@ rm -rf $RPM_BUILD_ROOT
 #install -m 755 viewer/*.pdb $RPM_BUILD_ROOT%{DataDir}/palm
 
 #However, there still is a chance to poldek -i plucker-viewer-${LANG} ;-)
-
 
 # Python Parser
 install -d $RPM_BUILD_ROOT%{PyPluckerDir}/helper
@@ -164,7 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files 
 %defattr(644,root,root,755)
-%doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS TODO manual
+%doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS manual
 %attr(755,root,root) %{_bindir}/plucker-setup
 %{py_sitedir}/PyPlucker
 %{_datadir}/plucker
