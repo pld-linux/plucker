@@ -115,11 +115,6 @@ install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 %clean
 #rm -rf $RPM_BUILD_ROOT
 
-# add links to parser tools
-ln -s %{PyPluckerDir}/Spider.py  %{_bindir}/plucker-build
-ln -s %{PyPluckerDir}/PluckerDocs.py %{_bindir}/plucker-decode
-ln -s %{PyPluckerDir}/PluckerDecode.py %{_bindir}/plucker-dump
-
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS TODO manual
