@@ -12,7 +12,7 @@ diff -ruN plucker-1.6.1/docs/Makefile.in plucker-1.6.1.org/docs/Makefile.in
  mostlyclean:
 diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-plucker
 --- plucker-1.6.1/unix/install-plucker	2003-11-07 18:16:33.000000000 +0100
-+++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 21:16:40.682146176 +0100
++++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 21:24:17.632679136 +0100
 @@ -18,7 +18,7 @@
  BINPKG='@@BINPKG@@'
  
@@ -22,7 +22,7 @@ diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-pluc
  
  # set up the Python environment
  PYTHON_LIBVER = string.split(sys.version)[0]
-@@ -137,15 +137,24 @@
+@@ -137,20 +137,32 @@
  
      if os.path.exists(os.path.join(BIN_DIR, "plucker-build")):
          os.remove(os.path.join(BIN_DIR, "plucker-build"))
@@ -50,3 +50,12 @@ diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-pluc
  
      if PLUCK_COMICS == 'yes':
          if os.path.exists(os.path.join(BIN_DIR, "pluck-comics")):
+             os.remove(os.path.join(BIN_DIR, "pluck-comics"))
+-        os.symlink(os.path.join(MOD_DIR, "PyPlucker", "pluck-comics.py"), os.path.join(BIN_DIR, "pluck-comics"))
++	try:
++	    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "pluck-comics.py"), os.path.join(BIN_DIR, "pluck-comics"))
++	except:
++            pass
+ 
+ if os.getuid() != 0 and os.path.exists(os.path.join(BIN_DIR, "plucker-setup")) and get_answer("\nDo you want to run plucker-setup now", 'y'): 
+     os.system(os.path.join(BIN_DIR, "plucker-setup"))
