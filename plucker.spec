@@ -26,7 +26,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 %define		release		%{relyear}-%{relmonth}-%{relday}_%{relhour}h%{relminute}m%{relsecond}s
 
 %description
-Plucker increase the utility of your handheld device by letting you view
+Plucker increases the utility of your handheld device by letting you view
 web pages and any document that can be converted to HTML or text. Plucker
 has many advanced features including the ability to read web pages with
 embedded images, an advanced find function, the ability to open an e-mail
@@ -35,14 +35,14 @@ ratio for the documents and an open, documented format. It can also be
 customized for your specific needs.
 
 %description -l pl
-Plucker increase the utility of your handheld device by letting you view
-web pages and any document that can be converted to HTML or text. Plucker
-has many advanced features including the ability to read web pages with
-embedded images, an advanced find function, the ability to open an e-mail
-form when tapping on mail-links in web documents, an impressive compression
-ratio for the documents and an open, documented format. It can also be
-customized for your specific needs.
-##########%configure --disable-palmosbuild
+Plucker zwiêksza u¿yteczno¶æ twojego palmtopa pozwalaj±æ na przegl±danie
+stron internetowych i innych dokumentów, które mog± zostaæ skonwertowane 
+do formatu textowego lub HTML. Plucker ma wiele zaawansowanych mo¿liwo¶ci 
+w³±czaj±c w to mo¿liwo¶æ czytania stron internetowych z osadzonymi obrazkami,
+zaawansowan± funkcjê wyszukiwania, mo¿liwo¶æ uruchomienia klienta poczty 
+dla odpowiednich linków, imponuj±cy wspó³czynnik kompresji dla dokumentów 
+i otwarty, udokumentowany format. Mo¿e zostaæ tak¿e dostosowany do innych 
+specyficznych wymagañ.
 
 %prep
 %setup -q -n %{name}_%{release}
