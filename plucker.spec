@@ -1,5 +1,6 @@
-Summary:	plucker is PalmOS conduit 
-Summary(pl):	plucker jest conduitem dla systemu PalmOS
+# TODO: do all post/preun/postun work during package build!
+Summary:	plucker - PalmOS conduit 
+Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
 Version:	1.4	
 Release:	%{relyear}%{relmonth}%{relday}%{relhour}m%{relminute}m%{relsecond}s
@@ -7,13 +8,16 @@ License:	GPL
 Group:		X11/Aplications
 Source0:	http://www.plkr.org/snapshots/%{name}_snapshot.tar.gz
 # Source0-md5:	df2c29d380a29bc04550a92a79a1769f
-URL:		http://www.plkr.org
 Patch0:         %{name}-pld.patch
+URL:		http://www.plkr.org/
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	netpbm-progs
 BuildRequires:	python-modules
 BuildRequires:	wxGTK2-devel
-Requires:	python
+%py_requireseq	python
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
 # This is fuckin' piece of shit made only because plucker's developers 
@@ -29,22 +33,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 %define		release		%{relyear}-%{relmonth}-%{relday}_%{relhour}h%{relminute}m%{relsecond}s
 
 %description
-Plucker increases the utility of your handheld device by letting you view
-web pages and any document that can be converted to HTML or text. Plucker
-has many advanced features including the ability to read web pages with
-embedded images, an advanced find function, the ability to open an e-mail
-form when tapping on mail-links in web documents, an impressive compression
-ratio for the documents and an open, documented format. It can also be
-customized for your specific needs.
+Plucker increases the utility of your handheld device by letting you
+view web pages and any document that can be converted to HTML or text.
+Plucker has many advanced features including the ability to read web
+pages with embedded images, an advanced find function, the ability to
+open an e-mail form when tapping on mail-links in web documents, an
+impressive compression ratio for the documents and an open, documented
+format. It can also be customized for your specific needs.
 
 %description -l pl
-Plucker zwiêksza u¿yteczno¶æ twojego palmtopa pozwalaj±æ na przegl±danie
-stron internetowych i innych dokumentów, które mog± zostaæ skonwertowane 
-do formatu textowego lub HTML. Plucker ma wiele zaawansowanych mo¿liwo¶ci 
-w³±czaj±c w to mo¿liwo¶æ czytania stron internetowych z osadzonymi obrazkami,
-zaawansowan± funkcjê wyszukiwania, mo¿liwo¶æ uruchomienia klienta poczty 
-dla odpowiednich linków, imponuj±cy wspó³czynnik kompresji dla dokumentów 
-i otwarty, udokumentowany format. Mo¿e zostaæ tak¿e dostosowany do innych 
+Plucker zwiêksza u¿yteczno¶æ palmtopa pozwalaj±c na przegl±danie
+stron internetowych i innych dokumentów, które mog± zostaæ
+skonwertowane do formatu tekstowego lub HTML. Plucker ma wiele
+zaawansowanych mo¿liwo¶ci w³±czaj±c w to mo¿liwo¶æ czytania stron
+internetowych z osadzonymi obrazkami, funkcjê zaawansowanego
+wyszukiwania, mo¿liwo¶æ uruchomienia klienta poczty dla odpowiednich
+linków, imponuj±cy wspó³czynnik kompresji dla dokumentów oraz otwarty,
+udokumentowany format. Mo¿e zostaæ tak¿e dostosowany do innych 
 specyficznych wymagañ.
 
 %prep
@@ -75,51 +80,47 @@ EOF
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%define PyPluckerDir %{_libdir}/python/site-packages/PyPlucker
+%define PyPluckerDir %{py_sitedir}/PyPlucker
 %define DataDir %{_datadir}/plucker
-%define DocDir %{_datadir}/doc/packages/plucker
-
+%define DocDir %{_datadir}/doc/plucker
 
 # Viewer
-mkdir -p %{buildroot}/%{DataDir}/palm
-install -m 755 viewer/*.prc %{buildroot}/%{DataDir}/palm
-install -m 755 viewer/*.pdb %{buildroot}/%{DataDir}/palm
+install -d $RPM_BUILD_ROOT%{DataDir}/palm
+install -m 755 viewer/*.prc $RPM_BUILD_ROOT%{DataDir}/palm
+install -m 755 viewer/*.pdb $RPM_BUILD_ROOT%{DataDir}/palm
 
 # Python Parser
-mkdir -p %{buildroot}/%{PyPluckerDir}/helper
-install -m 755 parser/PyPlucker/*.py %{buildroot}/%{PyPluckerDir}
-install -m 755 parser/PyPlucker/helper/*.py %{buildroot}/%{PyPluckerDir}/helper
+install -d $RPM_BUILD_ROOT%{PyPluckerDir}/helper
+install -m 755 parser/PyPlucker/*.py $RPM_BUILD_ROOT%{PyPluckerDir}
+install -m 755 parser/PyPlucker/helper/*.py $RPM_BUILD_ROOT%{PyPluckerDir}/helper
 
 # Config files
-mkdir -p %{buildroot}/%{DataDir}/config
-install -m 644 parser/exclusionlist.txt %{buildroot}/%{DataDir}/config
-install -m 644 parser/home.html %{buildroot}/%{DataDir}/config
-install -m 644 parser/pluckerrc.sample %{buildroot}/%{DataDir}/config
+install -d $RPM_BUILD_ROOT%{DataDir}/config
+install parser/exclusionlist.txt $RPM_BUILD_ROOT%{DataDir}/config
+install parser/home.html $RPM_BUILD_ROOT%{DataDir}/config
+install parser/pluckerrc.sample $RPM_BUILD_ROOT%{DataDir}/config
 
-mkdir -p %{buildroot}/%{_bindir}
+install -d $RPM_BUILD_ROOT%{_bindir}
 sed -e "s:@VERSION@:%{version}:" \
     -e "s:@PLUCKERDIR@:%{DataDir}:" setup.py.in > setup.py
-install -m 755 setup.py %{buildroot}/%{_bindir}/plucker-setup
+install -m 755 setup.py $RPM_BUILD_ROOT%{_bindir}/plucker-setup
 
 #Documentation
-mkdir -p %{buildroot}/%{DocDir}/manual
-install -m 644 docs/* %{buildroot}/%{DocDir}/manual
+install -d $RPM_BUILD_ROOT%{DocDir}/manual
+install docs/* $RPM_BUILD_ROOT%{DocDir}/manual
 
-install -m 644 AUTHORS BUGREPORT COPYING CREDITS ChangeLog %{buildroot}/%{DocDir}
-install -m 644 FAQ TODO NEWS README REQUIREMENTS %{buildroot}/%{DocDir}
+install AUTHORS BUGREPORT COPYING CREDITS ChangeLog $RPM_BUILD_ROOT%{DocDir}
+install FAQ TODO NEWS README REQUIREMENTS $RPM_BUILD_ROOT%{DocDir}
 
-mkdir -p %{buildroot}/%{_mandir}/man1/
-install -m 644 parser/plucker-build.1 %{buildroot}/%{_mandir}/man1/
-install -m 644 parser/plucker-decode.1 %{buildroot}/%{_mandir}/man1/
-install -m 644 parser/plucker-dump.1 %{buildroot}/%{_mandir}/man1/
+install -d $RPM_BUILD_ROOT%{_mandir}/man1
+install parser/plucker-build.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install parser/plucker-decode.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install parser/plucker-dump.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
 %post
-%define PyPluckerDir %{_libdir}/python/site-packages/PyPlucker
-
 python %{_libdir}/python/compileall.py %{PyPluckerDir}
 python -O %{_libdir}/python/compileall.py %{PyPluckerDir}
 
@@ -144,13 +145,12 @@ rm -f %{_bindir}/plucker-build
 rm -f %{_bindir}/plucker-decode
 rm -f %{_bindir}/plucker-dump
 
-
 %files
 %defattr(644,root,root,755)
-%{_bindir}/plucker-setup
-%doc %{_datadir}/doc/packages/plucker
+%doc %{_datadir}/doc/plucker
+%attr(755,root,root) %{_bindir}/plucker-setup
 %{_mandir}/man1/plucker-build*
 %{_mandir}/man1/plucker-decode*
 %{_mandir}/man1/plucker-dump*
-%{_libdir}/python/site-packages/PyPlucker
+%{py_sitedir}/PyPlucker
 %{_datadir}/plucker
