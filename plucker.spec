@@ -9,6 +9,7 @@ License:	GPL
 Group:		X11/Aplications
 Source0:	http://downloads.plkr.org/%{version}/%{name}_src-%{version}.tar.bz2
 # Source0-md5:	2517da5cac331531f9b6fb27cdbab6a8
+Patch0:		plucker-pld.spec
 URL:		http://www.plkr.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -47,7 +48,7 @@ specyficznych wymagañ.
 %prep
 %setup -q -n %{name}-%{version}
 #cp %{_sourcedir}/setup.py.in %{_builddir}/%{name}-%{version}
-#%patch0 -p1
+%patch0 -p1
 
 %build
 %{__gettextize}
