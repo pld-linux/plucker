@@ -1,4 +1,4 @@
-Summary:	plucker is PalmOS conduit
+Summary:	plucker is PalmOS conduit 
 Summary(pl):	plucker jest conduitem dla systemu PalmOS
 Name:		plucker
 Version:	1.4	
@@ -8,13 +8,16 @@ Group:		X11/Aplications
 Source0:	http://www.plkr.org/snapshots/%{name}_snapshot.tar.gz
 # Source0-md5:	df2c29d380a29bc04550a92a79a1769f
 URL:		http://www.plkr.org
-#Patch0:                %{name}-sysconfdir.patch
+Patch0:         %{name}-pld.patch
 BuildRequires:	gtk+2-devel
 BuildRequires:	netpbm-progs
 BuildRequires:	python-modules
 BuildRequires:	wxGTK2-devel
 Requires:	python
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
+
+# This is fuckin' piece of shit made only because plucker's developers 
+# seem to no longer make source code tarballs available. Evil.
 
 %define		relyear 	2003
 %define		relmonth	09
@@ -47,7 +50,7 @@ specyficznych wymagañ.
 %prep
 %setup -q -n %{name}_%{release}
 #cp %{_sourcedir}/setup.py.in %{_builddir}/%{name}-%{version}
-#%patch0 -p1
+%patch0 -p1
 
 %build
 rm -f missing
@@ -56,13 +59,13 @@ rm -f missing
 %{__autoconf}
 cd unix
 cat>>pld_install_answers<<EOF
-/
-/bin
+$RPM_BUILD_ROOT
+$RPM_BUILD_ROOT/bin
 y
-/usr/share/%{name}
-/usr/share/doc/%{name}-{%version}-%{release}
+$RPM_BUILD_ROOT/usr/share/%{name}
+$RPM_BUILD_ROOT/usr/share/doc/%{name}-%{version}-%{release}
 y
-/var/spool/netcomics
+$RPM_BUILD_ROOT/var/spool/netcomics
 y
 n
 y
