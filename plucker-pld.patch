@@ -12,7 +12,7 @@ diff -ruN plucker-1.6.1/docs/Makefile.in plucker-1.6.1.org/docs/Makefile.in
  mostlyclean:
 diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-plucker
 --- plucker-1.6.1/unix/install-plucker	2003-11-07 18:16:33.000000000 +0100
-+++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 20:15:56.835095128 +0100
++++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 21:01:39.745109424 +0100
 @@ -18,7 +18,7 @@
  BINPKG='@@BINPKG@@'
  
@@ -22,3 +22,15 @@ diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-pluc
  
  # set up the Python environment
  PYTHON_LIBVER = string.split(sys.version)[0]
+@@ -137,7 +137,10 @@
+ 
+     if os.path.exists(os.path.join(BIN_DIR, "plucker-build")):
+         os.remove(os.path.join(BIN_DIR, "plucker-build"))
+-    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Spider.py"), os.path.join(BIN_DIR, "plucker-build"))
++	try:
++	    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Spider.py"), os.path.join(BIN_DIR, "plucker-build"))
++	except:
++	    pass
+ 
+     if os.path.exists(os.path.join(BIN_DIR, "plucker-decode")):
+         os.remove(os.path.join(BIN_DIR, "plucker-decode"))
