@@ -4,11 +4,15 @@ Summary:	plucker - PalmOS conduit
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
 Version:	1.6.1	
-Release:	2
+Release:	3
 License:	GPL
 Group:		X11/Aplications
 Source0:	http://downloads.plkr.org/%{version}/%{name}_src-%{version}.tar.bz2
 # Source0-md5:	2517da5cac331531f9b6fb27cdbab6a8
+Source1:	http://downloads.plkr.org/1.6.1/%{name}_viewer_nonhires-%{version}.tar.bz2
+# Source1-md5:	4c7187a5446712863f60dbdd8e6e283d
+Source2:	http://downloads.plkr.org/1.6.1/%{name}_viewer-%{version}.tar.bz2
+# Source2-md5:	00b39eaf934e1ac5a2244dce19549e3e
 Patch0:		plucker-pld.patch
 URL:		http://www.plkr.org/
 BuildRequires:	autoconf
@@ -42,6 +46,18 @@ wyszukiwania, mo¿liwo¶æ uruchomienia klienta poczty dla odpowiednich
 linków, imponuj±cy wspó³czynnik kompresji dla dokumentów oraz otwarty,
 udokumentowany format. Mo¿e zostaæ tak¿e dostosowany do innych 
 specyficznych wymagañ.
+
+%package desktop
+Summary:        Graphical environment for plucker
+Summary(pl):    Graficzne ¶rodowisko dla pluckerem
+Group:          X11/Applications
+Requires:       %{name} = %{version}
+
+%description desktop
+This is the graphical environment for plucker
+
+%description desktop -l pl
+To jest graficzne ¶rodowisko dla pluckera
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -87,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 #install -m 755 viewer/*.prc $RPM_BUILD_ROOT%{DataDir}/palm
 #install -m 755 viewer/*.pdb $RPM_BUILD_ROOT%{DataDir}/palm
 
+#However, there still is a chance to poldek -i plucker-viewer-${LANG} ;-)
+
+
 # Python Parser
 install -d $RPM_BUILD_ROOT%{PyPluckerDir}/helper
 install -m 755 parser/python/PyPlucker/*.py $RPM_BUILD_ROOT%{PyPluckerDir}
@@ -111,6 +130,25 @@ cp -rf docs/* manual
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
+# desktop
+for file in `ls ./plucker_desktop/resource`
+do
+	install -d $RPM_BUILD_ROOT%{DataDir}-desktop/resource/${file}
+	install ./plucker_desktop/resource/* $RPM_BUILD_ROOT%{DataDir}-desktop/resource/${file}/
+done
+
+# desktop - locale
+for lang_ in `ls ./plucker_desktop/langs/`
+do
+	#LANG_=`echo ${lang_}|sed -e y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/`
+	#install -d $RPM_BUILD_ROOT/usr/lib/locale/${lang_}_${LANG_}/LC_MESSAGES/
+	#install ./plucker_desktop/langs/${lang_}/plucker-desktop.mo \
+	#	$RPM_BUILD_ROOT/usr/lib/locale/${lang_}_${LANG_}/LC_MESSAGES/
+	install -d $RPM_BUILD_ROOT/usr/lib/locale/${lang_}/LC_MESSAGES/
+	install ./plucker_desktop/langs/${lang_}/plucker-desktop.mo \
+		$RPM_BUILD_ROOT/usr/lib/locale/${lang_}/LC_MESSAGES/
+done
+
 %clean
 #rm -rf $RPM_BUILD_ROOT
 
@@ -121,3 +159,8 @@ install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 %{py_sitedir}/PyPlucker
 %{_datadir}/plucker
 %{_mandir}/man1/*.1*
+
+%files desktop
+%defattr(644,root,root,755)
+%{DataDir}-desktop/resource/*/*
+/usr/lib/locale/*/LC_MESSAGES/plucker-desktop.mo
