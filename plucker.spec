@@ -9,7 +9,7 @@ License:	GPL
 Group:		X11/Aplications
 Source0:	http://downloads.plkr.org/%{version}/%{name}_src-%{version}.tar.bz2
 # Source0-md5:	2517da5cac331531f9b6fb27cdbab6a8
-Patch0:		plucker-pld.spec
+Patch0:		plucker-pld.patch
 URL:		http://www.plkr.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
