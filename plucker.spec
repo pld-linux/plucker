@@ -50,15 +50,15 @@ specyficznych wymagañ.
 
 %package desktop
 Summary:        Graphical environment for plucker
-Summary(pl):    Graficzne ¶rodowisko dla pluckerem
+Summary(pl):    Graficzne ¶rodowisko dla pluckera
 Group:          X11/Applications
 Requires:       %{name} = %{version}
 
 %description desktop
-This is the graphical environment for plucker
+This is the graphical environment for plucker.
 
 %description desktop -l pl
-To jest graficzne ¶rodowisko dla pluckera
+To jest graficzne ¶rodowisko dla pluckera.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -139,7 +139,7 @@ do
 done
 
 # desktop - locale
-for lang_ in `ls ./plucker_desktop/langs/`
+for lang_ in `ls ./plucker_desktop/langs`
 do
 	install -d $RPM_BUILD_ROOT%{_datadir}/locale/${lang_}/LC_MESSAGES
 	install ./plucker_desktop/langs/${lang_}/plucker-desktop.mo \
