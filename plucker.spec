@@ -58,9 +58,13 @@ specyficznych wymagañ.
 cp /usr/share/latex2html/texinputs/html.sty docs
 cp /usr/lib/sgml-tools/epsf.sty docs
 cd unix
+
+#/tmp/plucker-1.6.1-1-root-yoshi/
+
 cat>>pld_install_answers<<EOF
 $RPM_BUILD_ROOT
 $RPM_BUILD_ROOT/bin
+n
 n
 $RPM_BUILD_ROOT/usr/lib/python2.3/site-packages
 $RPM_BUILD_ROOT/usr/share/%{name}
@@ -70,6 +74,8 @@ $RPM_BUILD_ROOT/var/spool/netcomics
 y
 n
 y
+y
+n
 EOF
 ./install-plucker < pld_install_answers
 
@@ -79,25 +85,25 @@ rm -rf $RPM_BUILD_ROOT
 %define DataDir %{_datadir}/plucker
 %define DocDir %{_datadir}/doc/plucker
 
-# Viewer
-install -d $RPM_BUILD_ROOT%{DataDir}/palm
-install -m 755 viewer/*.prc $RPM_BUILD_ROOT%{DataDir}/palm
-install -m 755 viewer/*.pdb $RPM_BUILD_ROOT%{DataDir}/palm
+## Viewer
+#install -d $RPM_BUILD_ROOT%{DataDir}/palm
+#install -m 755 viewer/*.prc $RPM_BUILD_ROOT%{DataDir}/palm
+#install -m 755 viewer/*.pdb $RPM_BUILD_ROOT%{DataDir}/palm
 
 # Python Parser
 install -d $RPM_BUILD_ROOT%{PyPluckerDir}/helper
-install -m 755 parser/PyPlucker/*.py $RPM_BUILD_ROOT%{PyPluckerDir}
-install -m 755 parser/PyPlucker/helper/*.py $RPM_BUILD_ROOT%{PyPluckerDir}/helper
+install -m 755 parser/python/PyPlucker/*.py $RPM_BUILD_ROOT%{PyPluckerDir}
+install -m 755 parser/python/PyPlucker/helper/*.py $RPM_BUILD_ROOT%{PyPluckerDir}/helper
 
 # Config files
 install -d $RPM_BUILD_ROOT%{DataDir}/config
-install parser/exclusionlist.txt $RPM_BUILD_ROOT%{DataDir}/config
-install parser/home.html $RPM_BUILD_ROOT%{DataDir}/config
-install parser/pluckerrc.sample $RPM_BUILD_ROOT%{DataDir}/config
+install parser/defaults/exclusionlist.txt $RPM_BUILD_ROOT%{DataDir}/config
+install parser/defaults/home.html $RPM_BUILD_ROOT%{DataDir}/config
+install parser/defaults/pluckerrc.sample $RPM_BUILD_ROOT%{DataDir}/config
 
 install -d $RPM_BUILD_ROOT%{_bindir}
 sed -e "s:@VERSION@:%{version}:" \
-    -e "s:@PLUCKERDIR@:%{DataDir}:" setup.py.in > setup.py
+    -e "s:@PLUCKERDIR@:%{DataDir}:" unix/setup.py.in > setup.py
 install -m 755 setup.py $RPM_BUILD_ROOT%{_bindir}/plucker-setup
 
 # Documentation
@@ -106,16 +112,14 @@ install -d manual
 cp -rf docs/* manual
 
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
-install parser/plucker-build.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install parser/plucker-decode.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install parser/plucker-dump.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-python %{_libdir}/python/compileall.py %{PyPluckerDir}
-python -O %{_libdir}/python/compileall.py %{PyPluckerDir}
+#%post
+#python %{_libdir}/python2.3/compileall.py %{PyPluckerDir}
+#python -O %{_libdir}/python2.3/compileall.py %{PyPluckerDir}
 
 # make sure we don't have some old cruft in the binary dir
 rm -f %{_bindir}/plucker-build
