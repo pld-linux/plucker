@@ -1,4 +1,5 @@
 # TODO: do all post/preun/postun work during package build!
+%include	/usr/lib/rpm/macros.python
 Summary:	plucker - PalmOS conduit 
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
@@ -16,8 +17,9 @@ BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	netpbm-progs
 BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 BuildRequires:	wxGTK2-devel
-%py_requireseq	python
+%pyrequires_eq	python
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
 # This is fuckin' piece of shit made only because plucker's developers 
@@ -58,7 +60,6 @@ specyficznych wymagañ.
 %patch0 -p1
 
 %build
-rm -f missing
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}
@@ -76,7 +77,6 @@ n
 y
 EOF
 ./install-plucker < pld_install_answers
-
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -105,12 +105,10 @@ sed -e "s:@VERSION@:%{version}:" \
     -e "s:@PLUCKERDIR@:%{DataDir}:" setup.py.in > setup.py
 install -m 755 setup.py $RPM_BUILD_ROOT%{_bindir}/plucker-setup
 
-#Documentation
-install -d $RPM_BUILD_ROOT%{DocDir}/manual
-install docs/* $RPM_BUILD_ROOT%{DocDir}/manual
-
-install AUTHORS BUGREPORT COPYING CREDITS ChangeLog $RPM_BUILD_ROOT%{DocDir}
-install FAQ TODO NEWS README REQUIREMENTS $RPM_BUILD_ROOT%{DocDir}
+# Documentation
+# TODO: copy only needed files!
+install -d manual
+cp -rf docs/* manual
 
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 install parser/plucker-build.1 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -147,7 +145,7 @@ rm -f %{_bindir}/plucker-dump
 
 %files
 %defattr(644,root,root,755)
-%doc %{_datadir}/doc/plucker
+%doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS TODO manual
 %attr(755,root,root) %{_bindir}/plucker-setup
 %{_mandir}/man1/plucker-build*
 %{_mandir}/man1/plucker-decode*
