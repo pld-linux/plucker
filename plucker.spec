@@ -1,3 +1,4 @@
+# TODO: eliminate BR: python-devel-src
 %include	/usr/lib/rpm/macros.python
 Summary:	plucker - PalmOS conduit 
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
@@ -17,8 +18,8 @@ BuildRequires:	gtk+2-devel
 BuildRequires:	netpbm-progs
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
-BuildRequires:	wxGTK2-devel
 BuildRequires:	sgml-tools
+BuildRequires:	wxGTK2-devel
 BuildRequires:	python-devel-src
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
@@ -75,9 +76,7 @@ y
 n
 EOF
 
-
 ./install-plucker < pld_install_answers
-
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -119,6 +118,6 @@ install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 %defattr(644,root,root,755)
 %doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS TODO manual
 %attr(755,root,root) %{_bindir}/plucker-setup
-%{_mandir}/man1/*.1.gz
 %{py_sitedir}/PyPlucker
 %{_datadir}/plucker
+%{_mandir}/man1/*.1*
