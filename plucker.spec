@@ -20,6 +20,7 @@ BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	wxGTK2-devel
 BuildRequires:	sgml-tools
+BuildRequires:	python-devel-src
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
 # This is fuckin' piece of shit made only because plucker's developers 
@@ -60,7 +61,8 @@ cd unix
 cat>>pld_install_answers<<EOF
 $RPM_BUILD_ROOT
 $RPM_BUILD_ROOT/bin
-y
+n
+$RPM_BUILD_ROOT/usr/lib/python2.3/site-packages
 $RPM_BUILD_ROOT/usr/share/%{name}
 $RPM_BUILD_ROOT/usr/share/doc/%{name}-%{version}-%{release}
 y
