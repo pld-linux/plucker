@@ -3,13 +3,12 @@
 Summary:	plucker - PalmOS conduit 
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
-Version:	1.4	
-Release:	%{relyear}%{relmonth}%{relday}%{relhour}m%{relminute}m%{relsecond}s
+Version:	1.6.1	
+Release:	1
 License:	GPL
 Group:		X11/Aplications
-Source0:	http://www.plkr.org/snapshots/%{name}_snapshot.tar.gz
-# Source0-md5:	df2c29d380a29bc04550a92a79a1769f
-Patch0:         %{name}-pld.patch
+Source0:	http://downloads.plkr.org/%{version}/%{name}_src-%{version}.tar.bz2
+# Source0-md5:	2517da5cac331531f9b6fb27cdbab6a8
 URL:		http://www.plkr.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -19,20 +18,11 @@ BuildRequires:	netpbm-progs
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	wxGTK2-devel
-%pyrequires_eq	python
+BuildRequires:	tetex-latex-carlisle
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
 # This is fuckin' piece of shit made only because plucker's developers 
 # seem to no longer make source code tarballs available. Evil.
-
-%define		relyear 	2003
-%define		relmonth	09
-%define		relday		14
-%define 	relhour		12
-%define		relminute	01
-%define		relsecond	33
-
-%define		release		%{relyear}-%{relmonth}-%{relday}_%{relhour}h%{relminute}m%{relsecond}s
 
 %description
 Plucker increases the utility of your handheld device by letting you
@@ -55,9 +45,9 @@ udokumentowany format. Mo¿e zostaæ tak¿e dostosowany do innych
 specyficznych wymagañ.
 
 %prep
-%setup -q -n %{name}_%{release}
+%setup -q -n %{name}-%{version}
 #cp %{_sourcedir}/setup.py.in %{_builddir}/%{name}-%{version}
-%patch0 -p1
+#%patch0 -p1
 
 %build
 %{__gettextize}
