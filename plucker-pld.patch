@@ -1,12 +1,12 @@
-diff -urN plucker_2003-09-14_12h01m33s/unix/install-plucker plucker_patched/unix/install-plucker
---- plucker_2003-09-14_12h01m33s/unix/install-plucker	2003-08-03 16:07:02.000000000 +0200
-+++ plucker_patched/unix/install-plucker	2003-09-14 23:13:26.000000000 +0200
-@@ -18,7 +18,7 @@
- BINPKG='@@BINPKG@@'
+diff -ruN plucker-1.6.1.org/docs/Makefile.in plucker-1.6.1/docs/Makefile.in
+--- plucker-1.6.1.org/docs/Makefile.in	2003-08-03 16:07:01.000000000 +0200
++++ plucker-1.6.1/docs/Makefile.in	2003-11-30 20:00:24.140886200 +0100
+@@ -98,7 +98,7 @@
+ 	@echo "0:-:.*next_g.gif" >> .exclude
+ 	@echo "0:-:.*contents.gif" >> .exclude
+ 	@echo "0:-:.*index.gif" >> .exclude
+-	$(PYBUILD) -v -H `pwd`/$(PLUCKERDOC)/index.html -M3 --stayonhost --zlib-compression --bpp=2 --maxwidth=150 --maxheight=250 --alt-maxwidth=500 --alt-maxheight=500 -p. -f $(USERGUIDE:.pdb=) --exclusion-list=.exclude
++	$(PYBUILD) -v -H `pwd`/$(PLUCKERDOC) -M3 --stayonhost --zlib-compression --bpp=2 --maxwidth=150 --maxheight=250 --alt-maxwidth=500 --alt-maxheight=500 -p. -f $(USERGUIDE:.pdb=) --exclusion-list=.exclude
+ 	@rm -f .exclude
  
- # default install targets
--TARGET="install-prc-files install-manual install-data"
-+TARGET="install-manual install-data"
- 
- # set up the Python environment
- PYTHON_LIBVER = string.split(sys.version)[0]
+ mostlyclean:
