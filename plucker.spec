@@ -147,7 +147,7 @@ done
 for lang_ in `ls ./plucker_desktop/langs`
 do
 	install -d $RPM_BUILD_ROOT%{_datadir}/locale/${lang_}/LC_MESSAGES
-	install ./plucker_desktop/langs/${lang_}/* \
+	install ./plucker_desktop/langs/${lang_}/plucker-desktop.mo \
 		$RPM_BUILD_ROOT%{_datadir}/locale/${lang_}/LC_MESSAGES
 done
 
@@ -166,6 +166,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files desktop -f plucker-desktop.lang
 %defattr(644,root,root,755)
-%{DataDir}-desktop/resource/*/*
-%{_datadir}/locale/*/LC_MESSAGES/*
+%{DataDir}-desktop/resource
 %{_bindir}/plucker-desktop
