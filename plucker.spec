@@ -135,25 +135,23 @@ install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 for file in `ls ./plucker_desktop/resource`
 do
 	install -d $RPM_BUILD_ROOT%{DataDir}-desktop/resource/${file}
-	install ./plucker_desktop/resource/* $RPM_BUILD_ROOT%{DataDir}-desktop/resource/${file}/
+	install ./plucker_desktop/resource/* $RPM_BUILD_ROOT%{DataDir}-desktop/resource/${file}
 done
 
 # desktop - locale
 for lang_ in `ls ./plucker_desktop/langs/`
 do
-	#LANG_=`echo ${lang_}|sed -e y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/`
-	#install -d $RPM_BUILD_ROOT/usr/lib/locale/${lang_}_${LANG_}/LC_MESSAGES/
-	#install ./plucker_desktop/langs/${lang_}/plucker-desktop.mo \
-	#	$RPM_BUILD_ROOT/usr/lib/locale/${lang_}_${LANG_}/LC_MESSAGES/
-	install -d $RPM_BUILD_ROOT/usr/lib/locale/${lang_}/LC_MESSAGES/
+	install -d $RPM_BUILD_ROOT%{_datadir}/locale/${lang_}/LC_MESSAGES
 	install ./plucker_desktop/langs/${lang_}/plucker-desktop.mo \
-		$RPM_BUILD_ROOT/usr/lib/locale/${lang_}/LC_MESSAGES/
+		$RPM_BUILD_ROOT%{_datadir}/locale/${lang_}/LC_MESSAGES
 done
 
-%clean
-#rm -rf $RPM_BUILD_ROOT
+%find_lang plucker-desktop
 
-%files
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -f 
 %defattr(644,root,root,755)
 %doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS TODO manual
 %attr(755,root,root) %{_bindir}/plucker-setup
@@ -161,7 +159,6 @@ done
 %{_datadir}/plucker
 %{_mandir}/man1/*.1*
 
-%files desktop
+%files desktop -f plucker-desktop.lang
 %defattr(644,root,root,755)
-%{DataDir}-desktop/resource/*/*
-/usr/lib/locale/*/LC_MESSAGES/plucker-desktop.mo
+%{DataDir}-desktop/resource
