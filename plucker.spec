@@ -151,7 +151,7 @@ done
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f 
+%files 
 %defattr(644,root,root,755)
 %doc AUTHORS BUGREPORT CREDITS ChangeLog FAQ NEWS README REQUIREMENTS TODO manual
 %attr(755,root,root) %{_bindir}/plucker-setup
