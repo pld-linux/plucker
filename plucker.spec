@@ -49,10 +49,10 @@ udokumentowany format. Mo¿e zostaæ tak¿e dostosowany do innych
 specyficznych wymagañ.
 
 %package desktop
-Summary:        Graphical environment for plucker
-Summary(pl):    Graficzne ¶rodowisko dla pluckera
-Group:          X11/Applications
-Requires:       %{name} = %{version}
+Summary:	Graphical environment for plucker
+Summary(pl):	Graficzne ¶rodowisko dla pluckera
+Group:		X11/Applications
+Requires:	%{name} = %{version}
 
 %description desktop
 This is the graphical environment for plucker.
