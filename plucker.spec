@@ -15,7 +15,9 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	latex2html
+BuildRequires:	libjpeg-devel
 BuildRequires:	netpbm-progs
+BuildRequires:	pkgconfig
 BuildRequires:	python-devel-src
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
