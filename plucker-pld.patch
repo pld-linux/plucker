@@ -12,7 +12,7 @@ diff -ruN plucker-1.6.1/docs/Makefile.in plucker-1.6.1.org/docs/Makefile.in
  mostlyclean:
 diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-plucker
 --- plucker-1.6.1/unix/install-plucker	2003-11-07 18:16:33.000000000 +0100
-+++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 21:09:47.913896488 +0100
++++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 21:16:40.682146176 +0100
 @@ -18,7 +18,7 @@
  BINPKG='@@BINPKG@@'
  
@@ -22,7 +22,7 @@ diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-pluc
  
  # set up the Python environment
  PYTHON_LIBVER = string.split(sys.version)[0]
-@@ -137,11 +137,17 @@
+@@ -137,15 +137,24 @@
  
      if os.path.exists(os.path.join(BIN_DIR, "plucker-build")):
          os.remove(os.path.join(BIN_DIR, "plucker-build"))
@@ -42,3 +42,11 @@ diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-pluc
  
      if os.path.exists(os.path.join(BIN_DIR, "plucker-dump")):
          os.remove(os.path.join(BIN_DIR, "plucker-dump"))
+-    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Decode.py"), os.path.join(BIN_DIR, "plucker-dump"))
++    try:
++	os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Decode.py"), os.path.join(BIN_DIR, "plucker-dump"))
++    except:
++	pass
+ 
+     if PLUCK_COMICS == 'yes':
+         if os.path.exists(os.path.join(BIN_DIR, "pluck-comics")):
