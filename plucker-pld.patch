@@ -1,18 +1,5 @@
-diff -ruN plucker-1.6.1/docs/Makefile.in plucker-1.6.1.org/docs/Makefile.in
---- plucker-1.6.1/docs/Makefile.in	2003-08-03 16:07:01.000000000 +0200
-+++ plucker-1.6.1.org/docs/Makefile.in	2003-11-30 20:14:21.277622072 +0100
-@@ -98,7 +98,7 @@
- 	@echo "0:-:.*next_g.gif" >> .exclude
- 	@echo "0:-:.*contents.gif" >> .exclude
- 	@echo "0:-:.*index.gif" >> .exclude
--	$(PYBUILD) -v -H `pwd`/$(PLUCKERDOC)/index.html -M3 --stayonhost --zlib-compression --bpp=2 --maxwidth=150 --maxheight=250 --alt-maxwidth=500 --alt-maxheight=500 -p. -f $(USERGUIDE:.pdb=) --exclusion-list=.exclude
-+	$(PYBUILD) -v -H `pwd`/$(PLUCKERDOC) -M3 --stayonhost --zlib-compression --bpp=2 --maxwidth=150 --maxheight=250 --alt-maxwidth=500 --alt-maxheight=500 -p. -f $(USERGUIDE:.pdb=) --exclusion-list=.exclude
- 	@rm -f .exclude
- 
- mostlyclean:
-diff -ruN plucker-1.6.1/plucker_desktop/Makefile.in plucker-1.6.1.org/plucker_desktop/Makefile.in
---- plucker-1.6.1/plucker_desktop/Makefile.in	2003-10-06 23:57:17.000000000 +0200
-+++ plucker-1.6.1.org/plucker_desktop/Makefile.in	2003-11-30 23:06:35.773539888 +0100
+--- plucker_desktop/Makefile.in~	2003-10-06 23:57:17.000000000 +0200
++++ plucker_desktop/Makefile.in	2004-06-05 16:14:25.000000000 +0200
 @@ -35,16 +35,16 @@
  
  TARGET          = plucker-desktop
@@ -34,71 +21,3 @@ diff -ruN plucker-1.6.1/plucker_desktop/Makefile.in plucker-1.6.1.org/plucker_de
     
  CXX             = @CXX@ $(CXXFLAGS)
  CTAGS           = @CTAGS@
-diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-plucker
---- plucker-1.6.1/unix/install-plucker	2003-11-07 18:16:33.000000000 +0100
-+++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 23:15:17.719192088 +0100
-@@ -18,7 +18,7 @@
- BINPKG='@@BINPKG@@'
- 
- # default install targets
--TARGET="install-prc-files install-manual install-data"
-+TARGET="install-data"
- 
- # set up the Python environment
- PYTHON_LIBVER = string.split(sys.version)[0]
-@@ -115,12 +115,12 @@
- if BINPKG == 'yes' or not get_answer("Do you want to build the viewer and ZLib binaries", 'y'):
-     CONFIGOPT = CONFIGOPT + " --disable-palmosbuild"
- 
--#if BINPKG == 'yes':
--#CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
--#if get_answer("Do you want to install the GUI desktop tool", 'y'):
--#TARGET = TARGET + " install-desktop"
--#elif not get_answer("Do you want to build the GUI desktop tool", 'y'):
--CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
-+if BINPKG == 'yes':
-+	CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
-+if get_answer("Do you want to install the GUI desktop tool", 'y'):
-+	TARGET = TARGET + " install-desktop"
-+elif not get_answer("Do you want to build the GUI desktop tool", 'y'):
-+	CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
- 
- print "\nRunning ./configure%s\n" % CONFIGOPT
- os.system("cd .. && ./configure%s" % CONFIGOPT)
-@@ -137,20 +137,32 @@
- 
-     if os.path.exists(os.path.join(BIN_DIR, "plucker-build")):
-         os.remove(os.path.join(BIN_DIR, "plucker-build"))
--    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Spider.py"), os.path.join(BIN_DIR, "plucker-build"))
-+	try:
-+	    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Spider.py"), os.path.join(BIN_DIR, "plucker-build"))
-+	except:
-+	    pass
- 
-     if os.path.exists(os.path.join(BIN_DIR, "plucker-decode")):
-         os.remove(os.path.join(BIN_DIR, "plucker-decode"))
--    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "PluckerDocs.py"), os.path.join(BIN_DIR, "plucker-decode"))
-+    try:
-+	os.symlink(os.path.join(MOD_DIR, "PyPlucker", "PluckerDocs.py"), os.path.join(BIN_DIR, "plucker-decode"))
-+    except:
-+	pass
- 
-     if os.path.exists(os.path.join(BIN_DIR, "plucker-dump")):
-         os.remove(os.path.join(BIN_DIR, "plucker-dump"))
--    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Decode.py"), os.path.join(BIN_DIR, "plucker-dump"))
-+    try:
-+	os.symlink(os.path.join(MOD_DIR, "PyPlucker", "Decode.py"), os.path.join(BIN_DIR, "plucker-dump"))
-+    except:
-+	pass
- 
-     if PLUCK_COMICS == 'yes':
-         if os.path.exists(os.path.join(BIN_DIR, "pluck-comics")):
-             os.remove(os.path.join(BIN_DIR, "pluck-comics"))
--        os.symlink(os.path.join(MOD_DIR, "PyPlucker", "pluck-comics.py"), os.path.join(BIN_DIR, "pluck-comics"))
-+	try:
-+	    os.symlink(os.path.join(MOD_DIR, "PyPlucker", "pluck-comics.py"), os.path.join(BIN_DIR, "pluck-comics"))
-+	except:
-+            pass
- 
- if os.getuid() != 0 and os.path.exists(os.path.join(BIN_DIR, "plucker-setup")) and get_answer("\nDo you want to run plucker-setup now", 'y'): 
-     os.system(os.path.join(BIN_DIR, "plucker-setup"))
