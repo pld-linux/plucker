@@ -76,6 +76,8 @@ cp /usr/share/latex2html/texinputs/html.sty docs
 cp /usr/lib/sgml-tools/epsf.sty docs
 cd unix
 
+mkdir ~/.plucker
+
 cat>>pld_install_answers<<EOF
 $RPM_BUILD_ROOT
 $RPM_BUILD_ROOT/bin
