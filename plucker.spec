@@ -1,5 +1,4 @@
 # TODO: eliminate BR: python-devel-src
-%include	/usr/lib/rpm/macros.python
 Summary:	plucker - PalmOS conduit 
 Summary(pl):	plucker - ³±cznik z systemem PalmOS
 Name:		plucker
