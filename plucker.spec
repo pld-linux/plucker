@@ -73,7 +73,7 @@ To jest graficzne ¶rodowisko dla pluckera.
 %{__aclocal}
 %{__autoconf}
 cp /usr/share/latex2html/texinputs/html.sty docs
-cp /usr/lib/sgml-tools/epsf.sty docs
+cp /usr/share/sgml-tools/epsf.sty docs
 cd unix
 
 test -d ~/.plucker || mkdir ~/.plucker
@@ -96,6 +96,10 @@ n
 EOF
 
 ./install-plucker < pld_install_answers
+
+cd ..
+
+%{__make} -C plucker_desktop
 
 %install
 rm -rf $RPM_BUILD_ROOT
