@@ -98,7 +98,7 @@ install parser/defaults/pluckerrc.sample $RPM_BUILD_ROOT%{DataDir}/config
 
 install -d $RPM_BUILD_ROOT%{_bindir}
 sed -e "s:@VERSION@:%{version}:" \
-    -e "s:@PLUCKERDIR@:%{DataDir}:" unix/setup.py.in > setup.py
+	-e "s:@PLUCKERDIR@:%{DataDir}:" unix/setup.py.in > setup.py
 install -m 755 setup.py $RPM_BUILD_ROOT%{_bindir}/plucker-setup
 
 # Documentation
