@@ -18,7 +18,7 @@ BuildRequires:	netpbm-progs
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	wxGTK2-devel
-BuildRequires:	tetex-latex-carlisle
+BuildRequires:	sgml-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
 # This is fuckin' piece of shit made only because plucker's developers 
@@ -53,6 +53,7 @@ specyficznych wymagañ.
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}
+cp /usr/share/latex2html/texinputs/html.sty docs
 cd unix
 cat>>pld_install_answers<<EOF
 $RPM_BUILD_ROOT
