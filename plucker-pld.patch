@@ -10,9 +10,33 @@ diff -ruN plucker-1.6.1/docs/Makefile.in plucker-1.6.1.org/docs/Makefile.in
  	@rm -f .exclude
  
  mostlyclean:
+diff -ruN plucker-1.6.1/plucker_desktop/Makefile.in plucker-1.6.1.org/plucker_desktop/Makefile.in
+--- plucker-1.6.1/plucker_desktop/Makefile.in	2003-10-06 23:57:17.000000000 +0200
++++ plucker-1.6.1.org/plucker_desktop/Makefile.in	2003-11-30 23:06:35.773539888 +0100
+@@ -35,16 +35,16 @@
+ 
+ TARGET          = plucker-desktop
+ 
+-CXXFLAGS        = @CXXFLAGS@ `wx-config --cflags`
++CXXFLAGS        = @CXXFLAGS@ `wxgtk2-2.4-config --cflags`
+ 
+-WX_LIBRARY_BASENAME	= `wx-config --basename`
+-WX_RELEASE	= `wx-config --release`
++WX_LIBRARY_BASENAME	= `wxgtk2-2.4-config --basename`
++WX_RELEASE	= `wxgtk2-2.4-config --release`
+ 
+ # Use with/without the stc depending on whether want to use styled text control ('stc')
+ # Note the order of libs is vital. Since the xrc and stc libs depend on the main wx library
+ # the xrc and stc have to come first. If you switch them around, you will get weird 
+ # reference errors.
+-LDLIBS          =-l$(WX_LIBRARY_BASENAME)_xrc-$(WX_RELEASE) -l$(WX_LIBRARY_BASENAME)_stc-$(WX_RELEASE) `wx-config --libs` 
++LDLIBS          =-l$(WX_LIBRARY_BASENAME)_xrc-$(WX_RELEASE) -l$(WX_LIBRARY_BASENAME)_stc-$(WX_RELEASE) `wxgtk2-2.4-config --libs` 
+    
+ CXX             = @CXX@ $(CXXFLAGS)
+ CTAGS           = @CTAGS@
 diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-plucker
 --- plucker-1.6.1/unix/install-plucker	2003-11-07 18:16:33.000000000 +0100
-+++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 21:24:17.632679136 +0100
++++ plucker-1.6.1.org/unix/install-plucker	2003-11-30 23:15:17.719192088 +0100
 @@ -18,7 +18,7 @@
  BINPKG='@@BINPKG@@'
  
@@ -22,6 +46,25 @@ diff -ruN plucker-1.6.1/unix/install-plucker plucker-1.6.1.org/unix/install-pluc
  
  # set up the Python environment
  PYTHON_LIBVER = string.split(sys.version)[0]
+@@ -115,12 +115,12 @@
+ if BINPKG == 'yes' or not get_answer("Do you want to build the viewer and ZLib binaries", 'y'):
+     CONFIGOPT = CONFIGOPT + " --disable-palmosbuild"
+ 
+-#if BINPKG == 'yes':
+-#CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
+-#if get_answer("Do you want to install the GUI desktop tool", 'y'):
+-#TARGET = TARGET + " install-desktop"
+-#elif not get_answer("Do you want to build the GUI desktop tool", 'y'):
+-CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
++if BINPKG == 'yes':
++	CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
++if get_answer("Do you want to install the GUI desktop tool", 'y'):
++	TARGET = TARGET + " install-desktop"
++elif not get_answer("Do you want to build the GUI desktop tool", 'y'):
++	CONFIGOPT = CONFIGOPT + " --disable-desktopbuild"
+ 
+ print "\nRunning ./configure%s\n" % CONFIGOPT
+ os.system("cd .. && ./configure%s" % CONFIGOPT)
 @@ -137,20 +137,32 @@
  
      if os.path.exists(os.path.join(BIN_DIR, "plucker-build")):
