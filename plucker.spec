@@ -135,7 +135,7 @@ install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 # desktop
 
-install ./plucker_desktop/plucker_desktop $RPM_BUILD_ROOT%{_bindir}
+install ./plucker_desktop/plucker-desktop $RPM_BUILD_ROOT%{_bindir}
 
 for file in `ls ./plucker_desktop/resource`
 do
