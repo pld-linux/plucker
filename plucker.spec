@@ -6,6 +6,7 @@ Release:	%{relyear}%{relmonth}%{relday}%{relhour}m%{relminute}m%{relsecond}s
 License:	GPL
 Group:		X11/Aplications
 Source0:	http://www.plkr.org/snapshots/%{name}_snapshot.tar.gz
+# Source0-md5:	df2c29d380a29bc04550a92a79a1769f
 URL:		http://www.plkr.org
 #Patch0:                %{name}-sysconfdir.patch
 BuildRequires:	python-modules
@@ -17,9 +18,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 %define		relyear 	2003
 %define		relmonth	09
 %define		relday		14
-%define 	relhour		09
+%define 	relhour		12
 %define		relminute	01
-%define		relsecond	41
+%define		relsecond	33
 
 %define		release		%{relyear}-%{relmonth}-%{relday}_%{relhour}h%{relminute}m%{relsecond}s
 
