@@ -9,9 +9,10 @@ Source0:	http://www.plkr.org/snapshots/%{name}_snapshot.tar.gz
 # Source0-md5:	df2c29d380a29bc04550a92a79a1769f
 URL:		http://www.plkr.org
 #Patch0:                %{name}-sysconfdir.patch
+BuildRequires:	gtk+2-devel
+BuildRequires:	netpbm-progs
 BuildRequires:	python-modules
 BuildRequires:	wxGTK2-devel
-BuildRequires:	gtk+2-devel
 Requires:	python
 BuildRoot:	%{tmpdir}/%{name}-%{version}-%{release}-root-%(id -u -n)
 
