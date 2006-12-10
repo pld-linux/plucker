@@ -89,8 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 
 # Python Parser
 install -d $RPM_BUILD_ROOT%{PyPluckerDir}/helper
-install -m 755 parser/python/PyPlucker/*.py $RPM_BUILD_ROOT%{PyPluckerDir}
-install -m 755 parser/python/PyPlucker/helper/*.py $RPM_BUILD_ROOT%{PyPluckerDir}/helper
+install parser/python/PyPlucker/*.py $RPM_BUILD_ROOT%{PyPluckerDir}
+install parser/python/PyPlucker/helper/*.py $RPM_BUILD_ROOT%{PyPluckerDir}/helper
 
 # Config files
 install -d $RPM_BUILD_ROOT%{DataDir}/config
@@ -101,7 +101,7 @@ install parser/defaults/pluckerrc.sample $RPM_BUILD_ROOT%{DataDir}/config
 install -d $RPM_BUILD_ROOT%{_bindir}
 sed -e "s:@VERSION@:%{version}:" \
 	-e "s:@PLUCKERDIR@:%{DataDir}:" unix/setup.py.in > setup.py
-install -m 755 setup.py $RPM_BUILD_ROOT%{_bindir}/plucker-setup
+install setup.py $RPM_BUILD_ROOT%{_bindir}/plucker-setup
 
 # Documentation
 # TODO: copy only needed files!
