@@ -1,6 +1,6 @@
 # TODO: eliminate BR: python-devel-src
 Summary:	plucker - PalmOS conduit 
-Summary(pl):	plucker - ³±cznik z systemem PalmOS
+Summary(pl.UTF-8):   plucker - Å‚Ä…cznik z systemem PalmOS
 Name:		plucker
 Version:	1.8
 Release:	0.1
@@ -34,28 +34,28 @@ open an e-mail form when tapping on mail-links in web documents, an
 impressive compression ratio for the documents and an open, documented
 format. It can also be customized for your specific needs.
 
-%description -l pl
-Plucker zwiêksza u¿yteczno¶æ palmtopa pozwalaj±c na przegl±danie
-stron internetowych i innych dokumentów, które mog± zostaæ
+%description -l pl.UTF-8
+Plucker zwiÄ™ksza uÅ¼ytecznoÅ›Ä‡ palmtopa pozwalajÄ…c na przeglÄ…danie
+stron internetowych i innych dokumentÃ³w, ktÃ³re mogÄ… zostaÄ‡
 skonwertowane do formatu tekstowego lub HTML. Plucker ma wiele
-zaawansowanych mo¿liwo¶ci w³±czaj±c w to mo¿liwo¶æ czytania stron
-internetowych z osadzonymi obrazkami, funkcjê zaawansowanego
-wyszukiwania, mo¿liwo¶æ uruchomienia klienta poczty dla odpowiednich
-linków, imponuj±cy wspó³czynnik kompresji dla dokumentów oraz otwarty,
-udokumentowany format. Mo¿e zostaæ tak¿e dostosowany do innych 
-specyficznych wymagañ.
+zaawansowanych moÅ¼liwoÅ›ci wÅ‚Ä…czajÄ…c w to moÅ¼liwoÅ›Ä‡ czytania stron
+internetowych z osadzonymi obrazkami, funkcjÄ™ zaawansowanego
+wyszukiwania, moÅ¼liwoÅ›Ä‡ uruchomienia klienta poczty dla odpowiednich
+linkÃ³w, imponujÄ…cy wspÃ³Å‚czynnik kompresji dla dokumentÃ³w oraz otwarty,
+udokumentowany format. MoÅ¼e zostaÄ‡ takÅ¼e dostosowany do innych 
+specyficznych wymagaÅ„.
 
 %package desktop
 Summary:	Graphical environment for plucker
-Summary(pl):	Graficzne ¶rodowisko dla pluckera
+Summary(pl.UTF-8):   Graficzne Å›rodowisko dla pluckera
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description desktop
 This is the graphical environment for plucker.
 
-%description desktop -l pl
-To jest graficzne ¶rodowisko dla pluckera.
+%description desktop -l pl.UTF-8
+To jest graficzne Å›rodowisko dla pluckera.
 
 %prep
 %setup -q
