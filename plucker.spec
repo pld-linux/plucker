@@ -1,6 +1,6 @@
 # TODO: eliminate BR: python-devel-src
 Summary:	plucker - PalmOS conduit 
-Summary(pl.UTF-8):   plucker - łącznik z systemem PalmOS
+Summary(pl.UTF-8):	plucker - łącznik z systemem PalmOS
 Name:		plucker
 Version:	1.8
 Release:	0.1
@@ -47,7 +47,7 @@ specyficznych wymagań.
 
 %package desktop
 Summary:	Graphical environment for plucker
-Summary(pl.UTF-8):   Graficzne środowisko dla pluckera
+Summary(pl.UTF-8):	Graficzne środowisko dla pluckera
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
