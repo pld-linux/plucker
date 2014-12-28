@@ -12,7 +12,7 @@ Patch1:		%{name}-pld.patch
 URL:		http://www.plkr.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gtk+2-devel
 BuildRequires:	latex2html
 BuildRequires:	libjpeg-devel
