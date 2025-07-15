@@ -59,7 +59,7 @@ To jest graficzne środowisko dla pluckera.
 
 %prep
 %setup -q
-%patch1 -p0
+%patch -P1 -p0
 
 %build
 %define PyPluckerDir %{py_sitedir}/PyPlucker
